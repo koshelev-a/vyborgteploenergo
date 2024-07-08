@@ -1,0 +1,8 @@
+# Connecting to DataBase
+.env
+
+# Cache
+__pycache__/conn_db.cpython-311.pyc
+__pycache__/connection_db.cpython-311.pyc
+__pycache__/connection_database.cpython-311.pyc
+__pycache__/query_db.cpython-311.pyc
