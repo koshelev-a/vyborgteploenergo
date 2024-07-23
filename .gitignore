@@ -1,8 +1,15 @@
-# Connecting to DataBase
-.env
+# Connecting to DataBase_Methods
+DataBase_Methods/.env
 
-# Cache
-__pycache__/conn_db.cpython-311.pyc
-__pycache__/connection_db.cpython-311.pyc
-__pycache__/connection_database.cpython-311.pyc
-__pycache__/query_db.cpython-311.pyc
+# Cache to DataBase_Methods
+DataBase_Methods/__pycache__/conn_db.cpython-311.pyc
+DataBase_Methods/__pycache__/connection_db.cpython-311.pyc
+DataBase_Methods/__pycache__/connection_database.cpython-311.pyc
+DataBase_Methods/__pycache__/query_db.cpython-311.pyc
+
+# Cache to Response_Methods
+Response_Methods/__pycache__/scada_passing.cpython-311.pyc
+
+# Connecting to ACC on Scada
+Response_Methods/.env
+Response_Methods/myenv
