@@ -33,9 +33,9 @@ def to_iframe(idFrame):
     iframe = driver.find_element(By.ID, idFrame)
     driver.switch_to.frame(iframe)
 
-#Получения данных из таблицы
-def query_from_table(trName, trData):
-    name = driver.find_element(By.XPATH, trName).text #"//table/tbody/tr[2]/td[2]"
+#Получения данных из таблицы (Убранно навзание полей = "trName", оставлены только данные)
+def query_from_table(trData): #trName,
+    #name = driver.find_element(By.XPATH, trName).text #"//table/tbody/tr[2]/td[2]"
     data = driver.find_element(By.XPATH, trData).text #"//table/tbody/tr[2]/td[2]"
 
-    return name+data
+    return data
