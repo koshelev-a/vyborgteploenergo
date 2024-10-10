@@ -46,7 +46,7 @@ def main():
                 for i in range(1, 17):  # от 1 до 17
                     tr_data = f"//table/tbody/tr[{i}]/td[2]"
                     float_value = query_from_table(trData=tr_data)
-                    float_scada.append(float_value.replace(",", "."))  # Добавление значения в список
+                    float_scada.append(float_value.replace(" ", "").replace(",", "."))  # Добавление значения в список
 
                 # Вывод значений из float_scada для проверки
                 print(float_scada)
