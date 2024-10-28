@@ -6,6 +6,7 @@ from pymodbus.client import ModbusTcpClient
 from scada_passing import driver, url_address, sign_in, to_iframe, query_from_table
 import struct
 
+
 def main():
     print(f'Запускается парсер!')
 
@@ -17,13 +18,15 @@ def main():
 
     to_iframe(idFrame="frameView")
 
+
+
     # Получение данных из .env файла
     load_dotenv()
 
     # Настройка логирования
-    logging.basicConfig()
-    log = logging.getLogger()
-    log.setLevel(logging.DEBUG)
+    # logging.basicConfig()
+    # log = logging.getLogger()
+    # log.setLevel(logging.DEBUG)
 
     # Настройка клиента
     client = ModbusTcpClient('localhost', port = os.getenv('port_client'))
@@ -48,6 +51,18 @@ def main():
                     float_value = query_from_table(trData=tr_data)
                     float_scada.append(float_value.replace(" ", "").replace(",", "."))  # Добавление значения в список
 
+
+                # Проверка на допустимость значения
+                if float_value and float_value != "---":  # Если значение не пустое и не "---"
+                    try:
+                        float_value = float(float_value)  # Преобразование в float
+                        float_scada.append(float_value)  # Добавление значения в список
+                    except ValueError:
+                        print(f"Недопустимое значение: {float_value}")  # Логирование ошибки
+                        float_scada.append(0)  # Например, добавляем None для недопустимого значения
+                else:
+                    float_scada.append(0)  # Или просто None если значение "---"
+                
                 # Вывод значений из float_scada для проверки
                 print(float_scada)
 

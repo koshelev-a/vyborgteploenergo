@@ -3,13 +3,21 @@ from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 # Получение данных из .env файла
 load_dotenv()
 
+options = Options()
+options.headless = True  # Запуск в headless режиме
+options.add_argument("--no-sandbox")  # Отключение песочницы, если есть проблемы с правами
+options.add_argument("--disable-dev-shm-usage")  # Использование памяти непосредственно в системе
+
 #Подключения к браузеру
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 #Адрес подключения
 def url_address(url):

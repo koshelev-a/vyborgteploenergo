@@ -3,13 +3,13 @@ from pymodbus.device import ModbusDeviceIdentification
 from pymodbus.datastore import ModbusSequentialDataBlock
 from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
 from pymodbus.transaction import ModbusRtuFramer, ModbusAsciiFramer
-
 import logging
 
+
 # Настройка логирования
-logging.basicConfig()
-log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+#logging.basicConfig()
+#log = logging.getLogger()
+#log.setLevel(logging.DEBUG)
 
 # Создание хранилища данных
 store = ModbusSlaveContext(
@@ -28,4 +28,4 @@ identity.ModelName = 'Modbus Server'
 identity.MajorMinorRevision = '1.0'
 
 # Запуск сервера
-StartTcpServer(context=ModbusServerContext(slaves=store, single=True), identity=identity, address=("0.0.0.0", 502))
+StartTcpServer(context=ModbusServerContext(slaves=store, single=True), identity=identity, address=("0.0.0.0", 7777))
