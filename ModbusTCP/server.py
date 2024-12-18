@@ -7,9 +7,9 @@ import logging
 
 
 # Настройка логирования
-#logging.basicConfig()
-#log = logging.getLogger()
-#log.setLevel(logging.DEBUG)
+logging.basicConfig()
+log = logging.getLogger()
+log.setLevel(logging.DEBUG)
 
 # Создание хранилища данных
 store = ModbusSlaveContext(

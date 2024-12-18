@@ -1,4 +1,5 @@
 # Connecting to ModbusTCP
 .env
+tst.py
 modbusenv
 __pycache__
