@@ -37,11 +37,17 @@ def main():
     try:
         while True:
             # Извлечение данных из базы данных
-            current_date = datetime.datetime.now().strftime('%d%m%Y') #Получения актуальной даты
+            current_date = datetime.datetime.now().strftime('%d%m%Y') # Получения актуальной даты
+            array_cod = [258, 257, 259, 266, 260, 254, 255, 267, 262, 263, 264, 261, 268] # Перебераем коды устройств
             fetcher = DataFetcher()
-            fetcher.select_data(int(current_date), 226)
 
-            if fetcher.record is None:
+            for cod in array_cod:
+                fetcher.select_data(int(current_date), cod)  # Вызываем функцию с текущей датой и кодом
+                print(f"Код: {cod}, Результат: {fetcher.record}")  # Вывод результата для текущего кода
+            
+
+            # Переделать код на передор записи в регистры
+            if fetcher.record is 0:
                 print("Нет данных для записи")
                 continue
             
