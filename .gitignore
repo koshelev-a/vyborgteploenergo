@@ -1,6 +1,5 @@
 #Кэш, env, виртуализация
 .env
-.DS_Store
 modbusenv/
 __pycache__/
 
