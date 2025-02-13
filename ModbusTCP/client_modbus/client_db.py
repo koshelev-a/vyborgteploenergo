@@ -39,41 +39,38 @@ def main():
             # Извлечение данных из базы данных
             current_date = datetime.datetime.now().strftime('%d%m%Y') # Получения актуальной даты
             array_cod = [258, 257, 259, 266, 260, 254, 255, 267, 262, 263, 264, 261, 268] # Перебераем коды устройств
-            fetcher = DataFetcher()
 
             for cod in array_cod:
+                fetcher = DataFetcher()
                 fetcher.select_data(int(current_date), cod)  # Вызываем функцию с текущей датой и кодом
                 print(f"Код: {cod}, Результат: {fetcher.record}")  # Вывод результата для текущего кода
-            
 
-            # Переделать код на передор записи в регистры
-            if fetcher.record is 0:
-                print("Нет данных для записи")
-                continue
-            
-            try:
-                packed_data = struct.pack('<f', fetcher.record)
-            except Exception as e:
-                print(f"Ошибка упаковки данных: {e}")
-                continue
+            # Если данных нет, переходим к следующему коду
+                if fetcher.record == 0:
+                    print(f"Нет данных для записи для кода {cod}")
+                    continue
 
-            registers = struct.unpack('<H', packed_data[2:])
+                try:
+                    packed_data = struct.pack('<f', fetcher.record)
+                except Exception as e:
+                    print(f"Ошибка упаковки данных для кода {cod}: {e}")
+                    continue
 
-            # Запись данных в регистры Modbus, начиная с адреса 1
-            result = modbus_client.write_registers(1, registers)
-            if result.isError():
-                print("Ошибка записи регистров Modbus")
-            else:
-                print(f"Записанные регистры: {registers}")
+                registers = struct.unpack('<HH', packed_data)  # Распаковка данных в два регистра
 
-            # Чтение регистров для проверки
-            result = modbus_client.read_holding_registers(1, len(registers))
-            if not result.isError():
-                print(f"Регистры хранения: {result.registers}")
-            else:
-                print("Ошибка чтения регистров хранения")
+                # Запись данных в регистры Modbus, начиная с адреса 1
+                result = modbus_client.write_registers(1, registers)
+                if result.isError():
+                    print(f"Ошибка записи регистров Modbus для кода {cod}")
+                else:
+                    print(f"Записанные регистры для кода {cod}: {registers}")
 
-            #print(f"Текущая дата: {current_date}, Полученные данные: {fetcher.record}, Упакованные данные: {packed_data}") #Для отладки данных
+                # Чтение регистров для проверки
+                result = modbus_client.read_holding_registers(1, len(registers))
+                if not result.isError():
+                    print(f"Регистры хранения для кода {cod}: {result.registers}")
+                else:
+                    print(f"Ошибка чтения регистров хранения для кода {cod}")
 
             sleep(30)  # Задержка перед следующим циклом "сек"
 

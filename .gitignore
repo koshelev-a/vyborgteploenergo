@@ -1,0 +1,15 @@
+#Кэш, env, виртуализация
+.env
+.DS_Store
+modbusenv/
+__pycache__/
+
+#Докер файлы
+Dockerfile
+docker-compose.yml
+
+#Устаревшие файлы (в будущем удалить)
+client_parser.py
+
+#Скрыто до проведения оптимизации
+requirements.txt

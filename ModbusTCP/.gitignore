@@ -1,7 +1,0 @@
-# Connecting to ModbusTCP
-.env
-.DS_Store
-tst.py
-modbusenv/
-__pycache__/
-Dockerfile
