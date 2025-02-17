@@ -28,7 +28,7 @@ class ModbusClient:
         self.client.close()
 
 def main():
-    modbus_client = ModbusClient('localhost', os.getenv('port_client'))
+    modbus_client = ModbusClient(os.getenv('host_client'), os.getenv('port_client'))
 
     if not modbus_client.connect():
         print("Ошибка подключения к Modbus серверу")
