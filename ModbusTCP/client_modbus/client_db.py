@@ -37,40 +37,37 @@ def main():
     try:
         while True:
             # Извлечение данных из базы данных
-            current_date = datetime.datetime.now().strftime('%d%m%Y') # Получения актуальной даты
-            array_cod = [258, 257, 259, 266, 260, 254, 255, 267, 262, 263, 264, 261, 268] # Перебераем коды устройств
+            current_date = datetime.datetime.now().strftime('%d%m%Y')  # Получение актуальной даты
+            array_cod = [258, 257, 259, 266, 260, 254, 255, 267, 262, 263, 264, 261, 268]  # Перебираем коды устройств
 
-            for cod in array_cod:
+            for index, cod in enumerate(array_cod):
                 fetcher = DataFetcher()
-                fetcher.select_data(int(current_date), cod)  # Вызываем функцию с текущей датой и кодом
-                print(f"Код: {cod}, Результат: {fetcher.record}")  # Вывод результата для текущего кода
+                fetcher.select_data(int(current_date), cod)
+                formatted_value = float("{:.2f}".format(fetcher.record))  # Вызываем функцию с текущей датой и кодом
+                print(f"Код: {cod}, Результат: {formatted_value}")  # Вывод результата для текущего кода
 
-            # Если данных нет, переходим к следующему коду
-                if fetcher.record == 0:
+                # Если данных нет, переходим к следующему коду
+                if formatted_value == 0:
                     print(f"Нет данных для записи для кода {cod}")
                     continue
 
                 try:
-                    packed_data = struct.pack('<f', fetcher.record)
+                    packed_data = struct.pack('<f', formatted_value)
                 except Exception as e:
                     print(f"Ошибка упаковки данных для кода {cod}: {e}")
                     continue
 
-                registers = struct.unpack('<HH', packed_data)  # Распаковка данных в два регистра
+                registers = struct.unpack('<H', packed_data[2:])[0] # Распаковка данных в два регистра
 
-                # Запись данных в регистры Modbus, начиная с адреса 1
-                result = modbus_client.write_registers(1, registers)
+                # Устанавливаем адрес регистра равным текущему коду
+                register_address = 1 + index  # Присваиваем register_address значение из array_cod
+
+                # Запись данных в регистры Modbus
+                result = modbus_client.write_registers(register_address, registers)
                 if result.isError():
                     print(f"Ошибка записи регистров Modbus для кода {cod}")
                 else:
-                    print(f"Записанные регистры для кода {cod}: {registers}")
-
-                # Чтение регистров для проверки
-                result = modbus_client.read_holding_registers(1, len(registers))
-                if not result.isError():
-                    print(f"Регистры хранения для кода {cod}: {result.registers}")
-                else:
-                    print(f"Ошибка чтения регистров хранения для кода {cod}")
+                    print(f"Записанные регистры для кода {cod}: {registers} & Адрес регистра:{register_address}")
 
             sleep(30)  # Задержка перед следующим циклом "сек"
 
