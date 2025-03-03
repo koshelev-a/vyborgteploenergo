@@ -38,7 +38,7 @@ def main():
         while True:
             # Извлечение данных из базы данных
             current_date = datetime.datetime.now().strftime('%d%m%Y')  # Получение актуальной даты
-            array_cod = [258, 257, 259, 266, 260, 254, 255, 267, 262, 263, 264, 261, 268]  # Перебираем коды устройств
+            array_cod = [258, 257, 259, 260, 254, 256, 267, 268, 266, 269, 255, 262, 263, 264, 261]  #Перебираем коды устройств
 
             for index, cod in enumerate(array_cod):
                 fetcher = DataFetcher()
