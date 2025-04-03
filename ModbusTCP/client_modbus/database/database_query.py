@@ -30,8 +30,8 @@ class DataFetcher:
             )
 
             cursor = connection.cursor()
-            sql_select_query = """SELECT val FROM public.tr%s WHERE cod = %s ORDER BY tm DESC LIMIT 1"""
-            cursor.execute(sql_select_query, (table, cod))
+            sql_select_query = f"""SELECT val FROM public.tr{table} WHERE cod = %s ORDER BY tm DESC LIMIT 1"""
+            cursor.execute(sql_select_query, (cod,))
             record = cursor.fetchone()
             self.record = record[0] if record else 0
 

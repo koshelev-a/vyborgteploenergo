@@ -42,7 +42,7 @@ def main():
 
             for index, cod in enumerate(array_cod):
                 fetcher = DataFetcher()
-                fetcher.select_data(int(current_date), cod)
+                fetcher.select_data(current_date, cod)
                 formatted_value = float("{:.2f}".format(fetcher.record))  # Вызываем функцию с текущей датой и кодом
                 print(f"Код: {cod}, Результат: {formatted_value}")  # Вывод результата для текущего кода
 
